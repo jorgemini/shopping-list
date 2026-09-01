@@ -42,22 +42,19 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: .center,
-          children: [
-            _products.isEmpty
-                ? Text(
-                    'No products yet',
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  )
-                : Text(
-                    _products.last,
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-          ],
-        ),
-      ),
+      body: _products.isEmpty
+          ? Center(
+              child: Text(
+                'No products yet',
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+            )
+          : ListView.builder(
+              itemCount: _products.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ListTile(title: Text(_products[index]));
+              },
+            ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addProduct,
         tooltip: 'Add product',
