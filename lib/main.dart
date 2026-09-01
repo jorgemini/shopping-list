@@ -27,11 +27,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  final List<String> _products = [];
 
-  void _incrementCounter() {
+  void _addProduct() {
     setState(() {
-      _counter++;
+      _products.add('Product ${_products.length + 1}');
     });
   }
 
@@ -46,17 +46,21 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: .center,
           children: [
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
+            _products.isEmpty
+                ? Text(
+                    'No products yet',
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  )
+                : Text(
+                    _products.last,
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
+        onPressed: _addProduct,
+        tooltip: 'Add product',
         child: const Icon(Icons.add),
       ),
     );
