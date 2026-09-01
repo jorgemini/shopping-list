@@ -35,6 +35,12 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _deleteProduct(int index) {
+    setState(() {
+      _products.removeAt(index);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +58,13 @@ class _MyHomePageState extends State<MyHomePage> {
           : ListView.builder(
               itemCount: _products.length,
               itemBuilder: (BuildContext context, int index) {
-                return ListTile(title: Text(_products[index]));
+                return ListTile(
+                  title: Text(_products[index]),
+                  trailing: IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () => _deleteProduct(index),
+                  ),
+                );
               },
             ),
       floatingActionButton: FloatingActionButton(
