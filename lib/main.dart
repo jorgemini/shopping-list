@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_list/models/product.dart';
+import 'package:shopping_list/widgets/add_product_dialog_custom.dart';
 
 void main() {
   runApp(const MyApp());
@@ -42,6 +43,15 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  Future<void> _showAddProductDialog() async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AddProductDialogCustom(addProduct: _addProduct);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,8 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () =>
-            _addProduct(Product(name: 'Product ${_products.length + 1}')),
+        onPressed: _showAddProductDialog,
         tooltip: 'Add product',
         child: const Icon(Icons.add),
       ),
