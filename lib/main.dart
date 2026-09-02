@@ -71,6 +71,9 @@ class _MyHomePageState extends State<MyHomePage> {
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
                   title: Text(_products[index].name),
+                  subtitle: Text(
+                    '\$${(_products[index].price / 100).toStringAsFixed(2)}',
+                  ),
                   trailing: IconButton(
                     icon: Icon(Icons.delete),
                     onPressed: () => _deleteProduct(index),

@@ -13,6 +13,7 @@ class AddProductDialogCustom extends StatefulWidget {
 class _AddProductDialogCustomState extends State<AddProductDialogCustom> {
   final _formKey = GlobalKey<FormState>();
   final _productNameController = TextEditingController();
+  final _productPriceController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +40,26 @@ class _AddProductDialogCustomState extends State<AddProductDialogCustom> {
                 return null;
               },
             ),
+            SizedBox(height: 8),
+            TextFormField(
+              controller: _productPriceController,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Enter the product price',
+                labelText: 'Product price',
+              ),
+              autofocus: true,
+              validator: (value) {
+                if (value == null || value.trim().isEmpty) {
+                  return 'Enter the product price';
+                }
+                var price = double.tryParse(value.trim());
+                if (price == null || price < 0) {
+                  return 'Enter a valid price';
+                }
+                return null;
+              },
+            ),
           ],
         ),
       ),
@@ -54,7 +75,12 @@ class _AddProductDialogCustomState extends State<AddProductDialogCustom> {
           onPressed: () {
             if (_formKey.currentState!.validate()) {
               widget.addProduct(
-                Product(name: _productNameController.text.trim()),
+                Product(
+                  name: _productNameController.text.trim(),
+                  price:
+                      (double.parse(_productPriceController.text.trim()) * 100)
+                          .round(),
+                ),
               );
               Navigator.of(context).pop();
             }
