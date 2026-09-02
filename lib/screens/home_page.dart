@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_list/models/product.dart';
 import 'package:shopping_list/widgets/add_product_dialog_custom.dart';
+import 'package:shopping_list/widgets/product_list_view_custom.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -49,20 +50,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
             )
-          : ListView.builder(
-              itemCount: _products.length,
-              itemBuilder: (BuildContext context, int index) {
-                return ListTile(
-                  title: Text(_products[index].name),
-                  subtitle: Text(
-                    '\$${(_products[index].price / 100).toStringAsFixed(2)}',
-                  ),
-                  trailing: IconButton(
-                    icon: Icon(Icons.delete),
-                    onPressed: () => _deleteProduct(index),
-                  ),
-                );
-              },
+          : ProductListViewCustom(
+              products: _products,
+              deleteProduct: _deleteProduct,
             ),
       floatingActionButton: FloatingActionButton(
         onPressed: _showAddProductDialog,
