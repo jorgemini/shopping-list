@@ -20,7 +20,9 @@ class ProductListViewCustom extends StatelessWidget {
 
         return ListTile(
           title: Text(product.name),
-          subtitle: Text('\$${(product.price / 100).toStringAsFixed(2)}'),
+          subtitle: Text(
+            '\$${(product.price / 100).toStringAsFixed(2)} • ${product.category.name}',
+          ),
           trailing: IconButton(
             icon: const Icon(Icons.delete),
             onPressed: () => deleteProduct(index),

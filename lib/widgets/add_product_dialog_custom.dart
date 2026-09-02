@@ -14,6 +14,7 @@ class _AddProductDialogCustomState extends State<AddProductDialogCustom> {
   final _formKey = GlobalKey<FormState>();
   final _productNameController = TextEditingController();
   final _productPriceController = TextEditingController();
+  Category category = Category.others;
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +61,29 @@ class _AddProductDialogCustomState extends State<AddProductDialogCustom> {
                 return null;
               },
             ),
+            SizedBox(height: 8),
+            DropdownButtonFormField<Category>(
+              initialValue: category,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Category',
+              ),
+              items: Category.values.map((category) {
+                return DropdownMenuItem<Category>(
+                  value: category,
+                  child: Text(category.name),
+                );
+              }).toList(),
+              onChanged: (value) {
+                category = value!;
+              },
+              validator: (value) {
+                if (value == null) {
+                  return 'Please select a category';
+                }
+                return null;
+              },
+            ),
           ],
         ),
       ),
@@ -80,6 +104,7 @@ class _AddProductDialogCustomState extends State<AddProductDialogCustom> {
                   price:
                       (double.parse(_productPriceController.text.trim()) * 100)
                           .round(),
+                  category: category,
                 ),
               );
               Navigator.of(context).pop();
