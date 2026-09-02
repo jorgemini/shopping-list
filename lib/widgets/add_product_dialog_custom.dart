@@ -49,7 +49,6 @@ class _AddProductDialogCustomState extends State<AddProductDialogCustom> {
                 hintText: 'Enter the product price',
                 labelText: 'Product price',
               ),
-              autofocus: true,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
                   return 'Enter the product price';
