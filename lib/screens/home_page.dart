@@ -18,6 +18,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void _addProduct(Product product) {
     setState(() {
       _products.add(product);
+      _products.sort((a, b) => a.category.index.compareTo(b.category.index));
     });
   }
 
