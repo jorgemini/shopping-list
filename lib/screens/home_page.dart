@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shopping_list/models/product.dart';
 import 'package:shopping_list/widgets/add_product_dialog_custom.dart';
 import 'package:shopping_list/widgets/product_list_view_custom.dart';
+import 'package:shopping_list/widgets/details_dialog_custom.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -45,6 +46,15 @@ class _MyHomePageState extends State<MyHomePage> {
     return total;
   }
 
+  Future<void> _showDetailsDialog() async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return DetailsDialogCustom(products: _products);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,7 +77,17 @@ class _MyHomePageState extends State<MyHomePage> {
                     deleteProduct: _deleteProduct,
                   ),
                 ),
-                Text('Total: \$${(_total / 100).toStringAsFixed(2)}'),
+                TextButton(
+                  child: Center(
+                    child: Text(
+                      'Total: \$${(_total / 100).toStringAsFixed(2)}\nClick to view details',
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  onPressed: () {
+                    _showDetailsDialog();
+                  },
+                ),
               ],
             ),
       floatingActionButton: FloatingActionButton(
