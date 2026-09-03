@@ -6,4 +6,4 @@ class Product {
   Category category;
 }
 
-enum Category { hygiene, homeCleaning, homeServices, food, transport, others }
+enum Category { food, hygiene, homeCleaning, homeServices, transport, others }
