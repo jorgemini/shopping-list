@@ -37,6 +37,14 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  int get _total {
+    int total = 0;
+    for (int i = 0; i < _products.length; i++) {
+      total += _products[i].price;
+    }
+    return total;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,9 +59,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
             )
-          : ProductListViewCustom(
-              products: _products,
-              deleteProduct: _deleteProduct,
+          : Column(
+              children: [
+                Expanded(
+                  child: ProductListViewCustom(
+                    products: _products,
+                    deleteProduct: _deleteProduct,
+                  ),
+                ),
+                Text('Total: \$${(_total / 100).toStringAsFixed(2)}'),
+              ],
             ),
       floatingActionButton: FloatingActionButton(
         onPressed: _showAddProductDialog,
