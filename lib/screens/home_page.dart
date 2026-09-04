@@ -53,6 +53,23 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  Future<void> _changeStatus(Product product) async {
+    final newStatus = product.status == Status.purchased
+        ? Status.noPurchased
+        : Status.purchased;
+
+    final updatedProduct = Product(
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      category: product.category,
+      status: newStatus,
+    );
+
+    await dbHelper.updateProduct(updatedProduct);
+    await _refreshProductList();
+  }
+
   int get _total {
     int total = 0;
     for (int i = 0; i < _products.length; i++) {
@@ -90,6 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: ProductListViewCustom(
                     products: _products,
                     deleteProduct: _deleteProduct,
+                    changeStatus: _changeStatus,
                   ),
                 ),
                 TextButton(

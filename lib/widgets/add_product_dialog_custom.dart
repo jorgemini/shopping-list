@@ -104,6 +104,7 @@ class _AddProductDialogCustomState extends State<AddProductDialogCustom> {
                       (double.parse(_productPriceController.text.trim()) * 100)
                           .round(),
                   category: category,
+                  status: Status.noPurchased,
                 ),
               );
               Navigator.of(context).pop();

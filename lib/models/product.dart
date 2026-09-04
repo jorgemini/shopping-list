@@ -4,16 +4,24 @@ class Product {
     required this.name,
     required this.price,
     required this.category,
+    required this.status,
   });
 
   int? id;
   String name;
   int price;
   Category category;
+  Status status;
 
   // Convert Product to Map for database operations
   Map<String, dynamic> toMap() {
-    return {'id': id, 'name': name, 'price': price, 'category': category.name};
+    return {
+      'id': id,
+      'name': name,
+      'price': price,
+      'category': category.name,
+      'status': status.name,
+    };
   }
 
   // Create Product from Map (from database)
@@ -23,6 +31,7 @@ class Product {
       name: map['name'],
       price: map['price'],
       category: Category.values.byName(map['category']),
+      status: Status.values.byName(map['status']),
     );
   }
 
@@ -34,3 +43,5 @@ class Product {
 }
 
 enum Category { food, hygiene, homeCleaning, homeServices, transport, others }
+
+enum Status { purchased, noPurchased }
