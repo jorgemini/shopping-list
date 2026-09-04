@@ -3,6 +3,7 @@ import 'package:shopping_list/models/product.dart';
 import 'package:shopping_list/widgets/add_product_dialog_custom.dart';
 import 'package:shopping_list/widgets/product_list_view_custom.dart';
 import 'package:shopping_list/widgets/details_dialog_custom.dart';
+import 'package:shopping_list/core/database/database_helper.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -14,19 +15,33 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Product> _products = [];
+  final dbHelper = DatabaseHelper.instance;
+  List<Product> _products = [];
 
-  void _addProduct(Product product) {
+  @override
+  void initState() {
+    super.initState();
+    _refreshProductList();
+  }
+
+  Future<void> _refreshProductList() async {
+    List<Product> products = await dbHelper.getAllProducts();
     setState(() {
-      _products.add(product);
-      _products.sort((a, b) => a.category.index.compareTo(b.category.index));
+      _products
+        ..clear()
+        ..addAll(products)
+        ..sort((a, b) => a.category.index.compareTo(b.category.index));
     });
   }
 
-  void _deleteProduct(int index) {
-    setState(() {
-      _products.removeAt(index);
-    });
+  Future<void> _addProduct(Product product) async {
+    await dbHelper.insertProduct(product);
+    _refreshProductList();
+  }
+
+  void _deleteProduct(int id) async {
+    await dbHelper.deleteProduct(id);
+    _refreshProductList();
   }
 
   Future<void> _showAddProductDialog() async {
