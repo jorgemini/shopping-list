@@ -10,7 +10,7 @@ class ProductListViewCustom extends StatelessWidget {
   });
 
   final List<Product> products;
-  final Function(int index) deleteProduct;
+  final Function(int id) deleteProduct;
   final Function(Product product) changeStatus;
 
   @override
@@ -30,7 +30,7 @@ class ProductListViewCustom extends StatelessWidget {
             children: [
               IconButton(
                 icon: const Icon(Icons.delete),
-                onPressed: () => deleteProduct(index),
+                onPressed: () => deleteProduct(product.id!),
               ),
               IconButton(
                 icon: Icon(
